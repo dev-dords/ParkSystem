@@ -53,12 +53,14 @@ class ParkCard extends Component {
               </Button>
             </Link>
           ) : (
-            <Button variant="outline-success">
-              <Card.Subtitle>
-                {'Available '}
-                <Spinner animation="grow" size="sm" variant="success" />
-              </Card.Subtitle>
-            </Button>
+            <Link to={'/new'}>
+              <Button variant="outline-success">
+                <Card.Subtitle>
+                  {'Available '}
+                  <Spinner animation="grow" size="sm" variant="success" />
+                </Card.Subtitle>
+              </Button>{' '}
+            </Link>
           )}
         </Card.Body>
       </Card>
