@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Button, Card, Spinner, ListGroup } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class ParkCard extends Component {
   render() {
@@ -36,12 +37,21 @@ class ParkCard extends Component {
             <ListGroup.Item>{this.props.owner || 'Owner'}</ListGroup.Item>
           </ListGroup>
           {this.props.parked === 'true' ? (
-            <Button variant="outline-danger">
-              <Card.Subtitle>
-                {'Parked '}
-                <Spinner animation="grow" size="sm" variant="danger" />
-              </Card.Subtitle>
-            </Button>
+            <Link
+              to={`/edit/${this.props.plate}`}
+              state={{
+                car: this.props.car,
+                plate: this.props.plate,
+                owner: this.props.owner,
+              }}
+            >
+              <Button variant="outline-danger">
+                <Card.Subtitle>
+                  {'Parked '}
+                  <Spinner animation="grow" size="sm" variant="danger" />
+                </Card.Subtitle>
+              </Button>
+            </Link>
           ) : (
             <Button variant="outline-success">
               <Card.Subtitle>
