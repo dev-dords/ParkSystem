@@ -37,3 +37,7 @@ code {
 .formItem {
   float: left;
 }
+
+.form-control:disabled{
+  background-color: #d3d3d3 !important;
+}

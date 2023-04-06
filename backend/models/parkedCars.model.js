@@ -9,6 +9,11 @@ const parkedCarSchema = new Schema(
       trim: true,
       minlength: 3,
     },
+    parked: {
+      type: Boolean,
+      required: true,
+      unique: false,
+    },
     owner: {
       type: String,
       required: true,

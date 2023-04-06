@@ -6,7 +6,6 @@ const ParkForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
-
   const [userInput, setUserInput] = useState({
     car: data.car,
     owner: data.owner,
@@ -14,10 +13,16 @@ const ParkForm = () => {
     edit: data.edit,
   });
   useEffect(() => {
-  
+    if (!data.edit) {
+      setUserInput({ car: '', owner: '', plate: '', edit: Boolean(false) });
+    }
   }, [data]);
   const handleChange = (event) => {
     setUserInput({ ...userInput, [event.target.name]: event.target.value });
+  };
+  const onCancelHandler = (e) => {
+    e.preventDefault();
+    navigate('/');
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -25,6 +30,7 @@ const ParkForm = () => {
       car: userInput.car,
       plate: userInput.plate,
       owner: userInput.owner,
+      parked: true,
     };
 
     if (userInput.edit) {
@@ -62,7 +68,7 @@ const ParkForm = () => {
           type="text"
           value={userInput.plate}
           name="plate"
-          // disabled={userInput.plate.length > 0}
+          disabled={userInput.edit && userInput.plate.length > 0}
           onChange={handleChange}
         />
       </Form.Group>
@@ -81,6 +87,7 @@ const ParkForm = () => {
         Submit
       </Button>
       <Button
+        onClick={onCancelHandler}
         variant="secondary"
         style={{ float: 'right', marginRight: '10px' }}
       >

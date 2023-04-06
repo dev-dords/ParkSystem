@@ -10,8 +10,9 @@ router.route('/new').post((req, res) => {
   const car = req.body.car;
   const owner = req.body.owner;
   const plate = req.body.plate;
+  const parked = req.body.parked;
 
-  const newParkedCar = new ParkedCar({ car, owner, plate });
+  const newParkedCar = new ParkedCar({ car, owner, plate, parked });
   newParkedCar
     .save()
     .then(() => res.json('Parking Slot Occupied'))

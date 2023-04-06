@@ -36,7 +36,7 @@ class ParkCard extends Component {
             </ListGroup.Item>
             <ListGroup.Item>{this.props.owner || 'Owner'}</ListGroup.Item>
           </ListGroup>
-          {this.props.parked === 'true' ? (
+          {this.props.parked ? (
             <Link
               to={`/edit/${this.props.plate}`}
               state={{

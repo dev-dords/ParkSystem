@@ -37,7 +37,7 @@ class ParkingLot extends Component {
           {this.state.parkedCars.map((lot) => (
             <Col key={lot.plate}>
               <ParkCard
-                parked="true"
+                parked={lot.parked}
                 car={lot.car}
                 plate={lot.plate}
                 owner={lot.owner}
