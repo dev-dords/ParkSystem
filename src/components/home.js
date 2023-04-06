@@ -4,11 +4,10 @@ import {
   Navbar,
   Container,
   Offcanvas,
-  NavDropdown,
   Form,
   Button,
 } from 'react-bootstrap';
-import {Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import ParkForm from './parkform';
 import ParkingLot from './parkinglot';
 class Home extends Component {
@@ -24,7 +23,9 @@ class Home extends Component {
             className="mb-3"
           >
             <Container fluid>
-              <Navbar.Brand as={Link} to='/'>Mobile Parking System</Navbar.Brand>
+              <Navbar.Brand as={Link} to="/">
+                Mobile Parking System
+              </Navbar.Brand>
               <Navbar.Toggle
                 aria-controls={`offcanvasNavbar-expand-${expand}`}
               />
@@ -40,24 +41,22 @@ class Home extends Component {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <Nav.Link as={Link} to='/'>Home</Nav.Link>
+                    <Nav.Link as={Link} to="/">
+                      Home
+                    </Nav.Link>
                    
-                    <Nav.Link as={Link} to='/new'>Book</Nav.Link>
-                    {/* <NavDropdown
-                      title="Dropdown"
-                      id={`offcanvasNavbarDropdown-expand-${expand}`}
+                    <Nav.Link
+                      as={Link}
+                      to="/new"
+                      state={{
+                        car: '',
+                        plate: '',
+                        owner: '',
+                        edit: Boolean(false),
+                      }}
                     >
-                      <NavDropdown.Item href="#action3">
-                        Action
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href="#action4">
-                        Another action
-                      </NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="#action5">
-                        Something else here
-                      </NavDropdown.Item>
-                    </NavDropdown> */}
+                      Book
+                    </Nav.Link>
                   </Nav>
                   <Form className="d-flex">
                     <Form.Control
@@ -73,7 +72,7 @@ class Home extends Component {
             </Container>
           </Navbar>
         ))}
-        
+
         <br />
         <main>
           <Container>

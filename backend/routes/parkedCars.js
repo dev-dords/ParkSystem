@@ -17,5 +17,16 @@ router.route('/new').post((req, res) => {
     .then(() => res.json('Parking Slot Occupied'))
     .catch((err) => res.status(404).json('Error ' + err));
 });
-
+router.route('/edit/:plateNumber').put((req, res) => {
+  ParkedCar.findOneAndUpdate({ plate: req.params.plateNumber }, req.body)
+    .then(() => res.json('Parking Data Updated'))
+    .catch((err) => res.status(404).json('Error ' + err));
+});
+router.route('/retrieve/:plateNumber').get((req, res) => {
+  ParkedCar.findOne({ plate: req.params.plateNumber })
+    .then((parked) => {
+      if (parked) res.send(parked);
+    })
+    .catch((err) => res.status(404).json('Error ' + err));
+});
 module.exports = router;

@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ParkCard from './parkcard';
-import data from '../data/data';
 import axios from 'axios';
 class ParkingLot extends Component {
   state = {
@@ -11,11 +10,11 @@ class ParkingLot extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/parked').then((response) => {
       if (response.data.length > 0) {
-        let free = this.state.capacity - response.data.length;
+        let vacant = this.state.capacity - response.data.length;
 
         this.setState({
           parkedCars: response.data,
-          capacity: free,
+          capacity: vacant,
         });
       }
     });
@@ -24,7 +23,7 @@ class ParkingLot extends Component {
     let content = [];
     for (let i = this.state.capacity; i > 0; i--) {
       content.push(
-        <Col>
+        <Col key={i}>
           <ParkCard />
         </Col>
       );
@@ -36,12 +35,13 @@ class ParkingLot extends Component {
       <Container fluid="md" className="pb-4">
         <Row xs={1} sm={2} md={2} lg={3} xl={4} className="gy-1 gx-4">
           {this.state.parkedCars.map((lot) => (
-            <Col>
+            <Col key={lot.plate}>
               <ParkCard
                 parked="true"
                 car={lot.car}
                 plate={lot.plate}
                 owner={lot.owner}
+                edit={Boolean(true)}
               />
             </Col>
           ))}

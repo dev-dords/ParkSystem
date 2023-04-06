@@ -43,6 +43,7 @@ class ParkCard extends Component {
                 car: this.props.car,
                 plate: this.props.plate,
                 owner: this.props.owner,
+                edit: Boolean(true),
               }}
             >
               <Button variant="outline-danger">
@@ -53,7 +54,15 @@ class ParkCard extends Component {
               </Button>
             </Link>
           ) : (
-            <Link to={'/new'}>
+            <Link
+              to={'/new'}
+              state={{
+                car: '',
+                plate: '',
+                owner: '',
+                edit: Boolean(false),
+              }}
+            >
               <Button variant="outline-success">
                 <Card.Subtitle>
                   {'Available '}
