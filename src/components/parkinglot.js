@@ -10,7 +10,10 @@ class ParkingLot extends Component {
   componentDidMount() {
     axios.get('http://localhost:5000/parked').then((response) => {
       if (response.data.length > 0) {
-        let vacant = this.state.capacity - response.data.length;
+        let occupied = response.data.filter(
+          (parkedCars) => parkedCars.parked
+        ).length;
+        let vacant = this.state.capacity - occupied;
 
         this.setState({
           parkedCars: response.data,
@@ -34,17 +37,20 @@ class ParkingLot extends Component {
     return (
       <Container fluid="md" className="pb-4">
         <Row xs={1} sm={2} md={2} lg={3} xl={4} className="gy-1 gx-4">
-          {this.state.parkedCars.map((lot) => (
-            <Col key={lot.plate}>
-              <ParkCard
-                parked={lot.parked}
-                car={lot.car}
-                plate={lot.plate}
-                owner={lot.owner}
-                edit={Boolean(true)}
-              />
-            </Col>
-          ))}
+          {this.state.parkedCars
+            .filter((parkedCars) => parkedCars.parked)
+            .map((lot) => (
+              <Col key={lot._id}>
+                <ParkCard
+                  id={lot._id}
+                  parked={lot.parked}
+                  car={lot.car}
+                  plate={lot.plate}
+                  owner={lot.owner}
+                  edit={Boolean(true)}
+                />
+              </Col>
+            ))}
           {this.renderVacancy()}
         </Row>
       </Container>

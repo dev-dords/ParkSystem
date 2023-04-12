@@ -11,10 +11,17 @@ const ParkForm = () => {
     owner: data.owner,
     plate: data.plate,
     edit: data.edit,
+    id: data.id,
   });
   useEffect(() => {
     if (!data.edit) {
-      setUserInput({ car: '', owner: '', plate: '', edit: Boolean(false) });
+      setUserInput({
+        car: '',
+        owner: '',
+        plate: '',
+        edit: Boolean(false),
+        id: '',
+      });
     }
   }, [data]);
   const handleChange = (event) => {
@@ -23,6 +30,14 @@ const ParkForm = () => {
   const onCancelHandler = (e) => {
     e.preventDefault();
     navigate('/');
+  };
+  const onEndHandler = (e) => {
+    e.preventDefault();
+    axios
+      .put('http://localhost:5000/parked/remove_park/' + userInput.id)
+      .then(() => {
+        navigate('/');
+      });
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -35,7 +50,7 @@ const ParkForm = () => {
 
     if (userInput.edit) {
       axios
-        .put('http://localhost:5000/parked/edit/' + userInput.plate, data)
+        .put('http://localhost:5000/parked/edit/' + userInput.id, data)
         .then(() => {
           navigate('/');
         });
@@ -86,10 +101,21 @@ const ParkForm = () => {
       <Button variant="success" type="submit" style={{ float: 'right' }}>
         Submit
       </Button>
+      {userInput.edit ? (
+        <Button
+          onClick={onEndHandler}
+          variant="danger"
+          style={{ float: 'right', marginRight: '5px' }}
+        >
+          End
+        </Button>
+      ) : (
+        <></>
+      )}
       <Button
         onClick={onCancelHandler}
         variant="secondary"
-        style={{ float: 'right', marginRight: '10px' }}
+        style={{ float: 'right', marginRight: '5px' }}
       >
         Cancel
       </Button>

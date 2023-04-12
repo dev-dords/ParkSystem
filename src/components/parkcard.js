@@ -44,6 +44,7 @@ class ParkCard extends Component {
                 plate: this.props.plate,
                 owner: this.props.owner,
                 edit: Boolean(true),
+                id: this.props.id,
               }}
             >
               <Button variant="outline-danger">
@@ -61,6 +62,7 @@ class ParkCard extends Component {
                 plate: '',
                 owner: '',
                 edit: Boolean(false),
+                id: '',
               }}
             >
               <Button variant="outline-success">
