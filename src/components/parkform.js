@@ -1,6 +1,7 @@
 import { Button, Form } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Dialog from './dialog';
 import axios from 'axios';
 const ParkForm = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const ParkForm = () => {
     edit: data.edit,
     id: data.id,
   });
+
   useEffect(() => {
     if (!data.edit) {
       setUserInput({
@@ -24,6 +26,16 @@ const ParkForm = () => {
       });
     }
   }, [data]);
+  const [dialog, SetDialog] = useState({
+    message: '',
+    isLoading: false,
+  });
+  const handleDialog = (e) => {
+    SetDialog({
+      message: 'Please confirm to end the session.',
+      isLoading: true,
+    });
+  };
   const handleChange = (event) => {
     setUserInput({ ...userInput, [event.target.name]: event.target.value });
   };
@@ -31,13 +43,20 @@ const ParkForm = () => {
     e.preventDefault();
     navigate('/');
   };
-  const onEndHandler = (e) => {
-    e.preventDefault();
-    axios
-      .put('http://localhost:5000/parked/remove_park/' + userInput.id)
-      .then(() => {
-        navigate('/');
-      });
+  const onEndHandler = (choose) => {
+    if (choose) {
+      axios
+        .put('http://localhost:5000/parked/remove_park/' + userInput.id)
+        .then(() => {
+          navigate('/');
+        });
+    }
+    else{
+      SetDialog({
+        message:'',
+        isLoading:false,
+      })
+    }
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -103,7 +122,7 @@ const ParkForm = () => {
       </Button>
       {userInput.edit ? (
         <Button
-          onClick={onEndHandler}
+          onClick={handleDialog}
           variant="danger"
           style={{ float: 'right', marginRight: '5px' }}
         >
@@ -119,6 +138,9 @@ const ParkForm = () => {
       >
         Cancel
       </Button>
+      {dialog.isLoading && (
+        <Dialog onDialog={onEndHandler} message={dialog.message} />
+      )}
     </Form>
   );
 };
