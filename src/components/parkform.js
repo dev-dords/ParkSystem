@@ -1,8 +1,8 @@
-import { Button, Form } from 'react-bootstrap';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Dialog from './dialog';
-import axios from 'axios';
+import { Button, Form } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Dialog from "./dialog";
+import axios from "axios";
 const ParkForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,21 +18,21 @@ const ParkForm = () => {
   useEffect(() => {
     if (!data.edit) {
       setUserInput({
-        car: '',
-        owner: '',
-        plate: '',
+        car: "",
+        owner: "",
+        plate: "",
         edit: Boolean(false),
-        id: '',
+        id: "",
       });
     }
   }, [data]);
   const [dialog, SetDialog] = useState({
-    message: '',
+    message: "",
     isLoading: false,
   });
   const handleDialog = (e) => {
     SetDialog({
-      message: 'Please confirm to end the session.',
+      message: "Please confirm to end the session.",
       isLoading: true,
     });
   };
@@ -41,21 +41,20 @@ const ParkForm = () => {
   };
   const onCancelHandler = (e) => {
     e.preventDefault();
-    navigate('/');
+    navigate("/");
   };
   const onEndHandler = (choose) => {
     if (choose) {
       axios
-        .put('http://localhost:5000/parked/remove_park/' + userInput.id)
+        .put("http://localhost:4000/parked/remove_park/" + userInput.id)
         .then(() => {
-          navigate('/');
+          navigate("/");
         });
-    }
-    else{
+    } else {
       SetDialog({
-        message:'',
-        isLoading:false,
-      })
+        message: "",
+        isLoading: false,
+      });
     }
   };
   const onSubmitHandler = (e) => {
@@ -69,13 +68,13 @@ const ParkForm = () => {
 
     if (userInput.edit) {
       axios
-        .put('http://localhost:5000/parked/edit/' + userInput.id, data)
+        .put("http://localhost:4000/parked/edit/" + userInput.id, data)
         .then(() => {
-          navigate('/');
+          navigate("/");
         });
     } else {
-      axios.post('http://localhost:5000/parked/new', data).then(() => {
-        navigate('/');
+      axios.post("http://localhost:4000/parked/new", data).then(() => {
+        navigate("/");
       });
     }
   };
@@ -83,7 +82,7 @@ const ParkForm = () => {
   return (
     <Form
       className="formContainer shadowBox"
-      style={{ maxWidth: '700px' }}
+      style={{ maxWidth: "700px" }}
       onSubmit={onSubmitHandler}
     >
       <Form.Group className="mb-3 formGroup" controlId="formBasicModel">
@@ -117,14 +116,14 @@ const ParkForm = () => {
         />
       </Form.Group>
 
-      <Button variant="success" type="submit" style={{ float: 'right' }}>
+      <Button variant="success" type="submit" style={{ float: "right" }}>
         Submit
       </Button>
       {userInput.edit ? (
         <Button
           onClick={handleDialog}
           variant="danger"
-          style={{ float: 'right', marginRight: '5px' }}
+          style={{ float: "right", marginRight: "5px" }}
         >
           End
         </Button>
@@ -134,7 +133,7 @@ const ParkForm = () => {
       <Button
         onClick={onCancelHandler}
         variant="secondary"
-        style={{ float: 'right', marginRight: '5px' }}
+        style={{ float: "right", marginRight: "5px" }}
       >
         Cancel
       </Button>

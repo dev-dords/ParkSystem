@@ -1,14 +1,14 @@
-import { Component } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import ParkCard from './parkcard';
-import axios from 'axios';
+import { Component } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import ParkCard from "./parkcard";
+import axios from "axios";
 class ParkingLot extends Component {
   state = {
     parkedCars: [],
     capacity: 8,
   };
   componentDidMount() {
-    axios.get('http://localhost:5000/parked').then((response) => {
+    axios.get("http://localhost:4000/parked").then((response) => {
       if (response.data.length > 0) {
         let occupied = response.data.filter(
           (parkedCars) => parkedCars.parked
